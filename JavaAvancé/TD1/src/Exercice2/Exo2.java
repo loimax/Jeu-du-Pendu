@@ -1,3 +1,4 @@
+package Exercice2;
 import java.util.*;
 import java.io.*;
 
@@ -8,12 +9,13 @@ public class Exo2 {
     public static void ecritureMultiple(){
         try{
             Scanner sc = new Scanner(System.in);
-            String nom = sc.nextLine();
             System.out.println("Multiples de : ");
             float a = sc.nextFloat();
             System.out.println("jusqu'à : ");
             float b = sc.nextFloat();
-            BufferedWriter bw = new BufferedWriter(new FileWriter("multiple.txt", true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("multiple.txt", false));
+            bw.write("Multiples de " + a + " jusqu'à " + b + " : ");
+            bw.newLine();
             for(int i = 1; a*i <= b; i++){
                 bw.write(i + " ");
                 String c = String.valueOf(a*i);

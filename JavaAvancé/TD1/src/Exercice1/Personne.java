@@ -1,3 +1,4 @@
+package Exercice1;
 import java.util.*;
 import java.io.*;
 
