@@ -7,9 +7,9 @@ import java.io.*;
 
 public class Pendu {
     public static void main(String[] args) throws Exception {
-        // Pendu p = new Pendu();
+        Pendu p = new Pendu();
         // System.out.println(p.recupRandomWord());
-        JFrame g = new Window();
+        JFrame g = new Window(p, p.recupRandomWord());
     }
     public void ecritureListe(){
         try{

@@ -15,6 +15,5 @@ public class Dessin extends JPanel {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.drawLine(0, 0, this.getWidth(), this.getHeight());
-    System.out.println(Thread.currentThread() + " en fin de paintComponent()");
   }
 }

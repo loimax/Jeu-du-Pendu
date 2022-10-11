@@ -6,17 +6,17 @@ import javax.swing.*;
 
 public class Window extends JFrame {
 
-	String word = null;
+	public String word;
 
-	public Window() {
+	public Window(Pendu p, String word){
 		super("Jeu du pendu");
+		this.word = word;
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		};
 		addWindowListener(l);
-		Pendu p = new Pendu();
 
 		JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.addActionListener(new ActionListener() {
@@ -31,6 +31,7 @@ public class Window extends JFrame {
 				System.exit(0);			
 			}
 		});
+		
 
 		JPanel pannel = new JPanel();
 		pannel.add(btnWord);
@@ -43,8 +44,9 @@ public class Window extends JFrame {
 		setVisible(true);
 		
 	}
-	public void setWord() {
+	public int setWord() {
 		Pendu p = new Pendu();
 		this.word = p.recupRandomWord();
+		return this.word.length();
 	}
 }
