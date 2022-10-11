@@ -1,11 +1,13 @@
+package td3;
 import java.util.*;
 import java.io.*;
 
 public class Pendu {
     public static void main(String[] args) throws Exception {
-        Pendu p = new Pendu();
-        System.out.println(p.recupRandomListe());
-
+        // Pendu p = new Pendu();
+        // System.out.println(p.recupRandomWord());
+        graph g = new graph();
+        g.window();
     }
     public void ecritureListe(){
         try{
@@ -25,7 +27,7 @@ public class Pendu {
             e.printStackTrace();
         }
     }
-    public String recupRandomListe(){
+    public String recupRandomWord(){
         File fichier = new File("liste.txt");
         List<String> l = new ArrayList<String>();
         if(!fichier.exists()){
