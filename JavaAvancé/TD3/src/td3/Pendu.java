@@ -9,7 +9,7 @@ public class Pendu {
     public static void main(String[] args) throws Exception {
         Pendu p = new Pendu();
         // System.out.println(p.recupRandomWord());
-        JFrame g = new Window(p, p.recupRandomWord());
+        Gui g = new Gui();
     }
     public void ecritureListe(){
         try{
