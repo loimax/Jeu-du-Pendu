@@ -1,28 +1,30 @@
 package Exercice1;
 import java.util.*;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class Personne implements Serializable{
-    private String nom;
-    private String dateNaissance;
-    private String pays;
-    private String numSecuSocial;
+    String nom;
+    Date dateNaissance;
+    String pays;
+    transient int numSecuSocial;
     private String profession;
-    public Personne(){
+    public Personne() throws IOException, ParseException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Nom : ");
         this.nom = sc.nextLine();
         System.out.println("Date de naissance : ");
-        this.dateNaissance = sc.nextLine();
+        this.dateNaissance = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
         System.out.println("Pays : ");
         this.pays = sc.nextLine();
         System.out.println("Numéro de sécurité sociale : ");
-        this.numSecuSocial = sc.nextLine();
+        this.numSecuSocial = sc.nextInt();
         System.out.println("Profession : ");
         this.profession = sc.nextLine();
         // System.out.println("Personne créée : \n" + "Nom : " + this.nom + "\nDate de naissance : " + this.dateNaissance + "\nPays : " + this.pays + "\nNuméro de sécurité sociale : " + this.numSecuSocial + "\nProfession : " + this.profession);
     }
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException, ParseException {
         int i = 0;
         List<Personne> tab = new ArrayList<Personne>();
 
