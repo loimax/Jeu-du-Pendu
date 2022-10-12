@@ -36,10 +36,13 @@ public class Gui extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int nombreChar = p.recupRandomWord().length();
 				word.setText("Longueur du mot : "+ p.recupRandomWord().length());
-				for(int i = 0; i < nombreChar; i++){
-					JLabel text = new JLabel("_", SwingConstants.CENTER);
-					panel2.add(text);
+				String traits = "";
+				for(int i = 0; i<nombreChar; i++){
+					traits = traits + "_";
 				}
+				System.out.println(traits);
+				JLabel text = new JLabel(traits, SwingConstants.CENTER);
+				//recuperer mot créer 
 			}
 		});
 
