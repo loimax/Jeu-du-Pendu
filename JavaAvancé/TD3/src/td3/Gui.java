@@ -31,17 +31,19 @@ public class Gui extends JFrame{
 		this.panel3 = new JPanel();
 
 		JLabel word = new JLabel("Longueur du mot : 0");
+		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int nombreChar = p.recupRandomWord().length();
-				word.setText("Longueur du mot : "+ p.recupRandomWord().length());
+				String mot = p.recupRandomWord();
+				int nombreChar = mot.length();
+				word.setText("Longueur du mot : "+ nombreChar);
 				String traits = "";
 				for(int i = 0; i<nombreChar; i++){
-					traits = traits + "_";
+					traits = traits + "_" + "      ";
 				}
-				System.out.println(traits);
-				JLabel text = new JLabel(traits, SwingConstants.CENTER);
+				System.out.println(nombreChar + traits + traits.length() + mot);
+				motAdeviner.setText(traits);
 				//recuperer mot créer 
 			}
 		});
@@ -67,7 +69,7 @@ public class Gui extends JFrame{
 		frame.getContentPane().add(panel, "North");
 
 		panel2.add(word);
-		// panel2.add(new TraitsParMots(5));
+		panel2.add(motAdeviner);
 		frame.getContentPane().add(panel2, "West");
 
 		panel3.add(l1);
