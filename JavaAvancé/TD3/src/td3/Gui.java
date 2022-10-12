@@ -18,7 +18,7 @@ public class Gui extends JFrame{
 		};
 		addWindowListener(l);
 
-		Pendu p = new Pendu();
+		backend p = new backend();
 		
 		this.frame = new JFrame("Jeu du Pendu :");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

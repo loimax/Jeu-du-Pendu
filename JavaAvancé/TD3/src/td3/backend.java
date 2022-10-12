@@ -1,13 +1,9 @@
 package td3;
 import java.util.*;
-
-import javax.swing.JFrame;
-
 import java.io.*;
 
-public class Pendu {
+public class backend {
     public static void main(String[] args) throws Exception {
-        Pendu p = new Pendu();
         // System.out.println(p.recupRandomWord());
         Gui g = new Gui();
     }
