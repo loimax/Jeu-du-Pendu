@@ -14,6 +14,8 @@ public class Gui extends JFrame{
 		};
 		addWindowListener(l);
 
+		Pendu p = new Pendu();
+		
 		JFrame frame = new JFrame("Jeu du Pendu :");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800,600);
@@ -22,7 +24,6 @@ public class Gui extends JFrame{
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Pendu p = new Pendu();
 				w.setText("Longueur du mot : "+ p.recupRandomWord().length());
 			}
 		});
