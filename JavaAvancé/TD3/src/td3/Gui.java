@@ -3,7 +3,6 @@ package td3;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-
 public class Gui extends JFrame{
 
 	public JFrame frame;
@@ -30,14 +29,14 @@ public class Gui extends JFrame{
 		this.panel2 = new JPanel();
 		this.panel3 = new JPanel();
 
-		JLabel word = new JLabel("Longueur du mot : 0");
+		// JLabel word = new JLabel("Longueur du mot : 0");
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mot = p.recupRandomWord();
 				int nombreChar = mot.length();
-				word.setText("Longueur du mot : "+ nombreChar);
+				// word.setText("Longueur du mot : "+ nombreChar);
 				String traits = "";
 				for(int i = 0; i<nombreChar; i++){
 					traits = traits + "_" + "      ";
@@ -55,12 +54,18 @@ public class Gui extends JFrame{
 			}
 		});
 		
-		JLabel l1 = new JLabel("Entrez la lettre :", SwingConstants.RIGHT);
+		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :", SwingConstants.RIGHT);
 		//ajoutez un listener ici pour text
-		JTextField text = new JTextField("", 1);
+		JTextField text = new JTextField("", 10);
 		text.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// updateLabel();
+				String strText = text.getText();
+				if(strText.length() >=2){
+					JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+				} else {
+					System.out.println(strText);
+				}
+				text.setText("");
 			}
 		});
 
@@ -68,11 +73,11 @@ public class Gui extends JFrame{
 		panel.add(btnExit);
 		frame.getContentPane().add(panel, "North");
 
-		panel2.add(word);
+		// panel2.add(word);
 		panel2.add(motAdeviner);
 		frame.getContentPane().add(panel2, "West");
 
-		panel3.add(l1);
+		panel3.add(labelEntrerLettre);
 		panel3.add(text);
 		frame.getContentPane().add(panel3, "South");
 		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
