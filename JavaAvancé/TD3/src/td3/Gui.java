@@ -9,7 +9,7 @@ public class Gui extends JFrame{
 	public JPanel panel;
 	public JPanel panel2;
 	public JPanel panel3;
-
+	public JPanel panel4;
     public Gui(){
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -28,7 +28,8 @@ public class Gui extends JFrame{
 		this.panel = new JPanel();
 		this.panel2 = new JPanel();
 		this.panel3 = new JPanel();
-
+		this.panel4 = new JPanel();
+		
 		// JLabel word = new JLabel("Longueur du mot : 0");
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 	    JButton btnWord = new JButton("Nouveau Mot");
