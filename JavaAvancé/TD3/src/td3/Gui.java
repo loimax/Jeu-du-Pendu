@@ -2,6 +2,7 @@ package td3;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
@@ -43,7 +44,23 @@ public class Gui extends JFrame{
 		JLabel labelImage = new JLabel();
 		// JLabel word = new JLabel("Longueur du mot : 0");
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
+
 	    JButton btnWord = new JButton("Nouveau Mot");
+		btnWord.setBounds(70,80,100,30);
+		btnWord.setBackground(Color.decode("0x2F849F"));
+		btnWord.setOpaque(true);
+		btnWord.setBorderPainted(false);
+		btnWord.addMouseListener(new MouseListener() {
+		    public void mouseReleased(MouseEvent arg0) {}
+		    public void mousePressed(MouseEvent arg0) {}
+		    public void mouseEntered(MouseEvent arg0) {
+		    	btnWord.setBackground(Color.decode("0x03da00"));
+		    }
+		    public void mouseExited(MouseEvent arg0) {
+		    	btnWord.setBackground(Color.decode("0x2F849F"));
+		    }
+		    public void mouseClicked(MouseEvent arg0) {}
+		});
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				leMot.clear();
@@ -60,10 +77,26 @@ public class Gui extends JFrame{
 				// System.out.println(nombreChar + traits + traits.length() + mot);
 				motAdeviner.setText(traits);
 				//recuperer mot créer 
+				btnWord.setEnabled(false);
 			}
 		});
 
 		JButton btnExit = new JButton("Exit");
+		btnExit.setBounds(70,80,100,30);
+		btnExit.setBackground(Color.decode("0x2F849F"));
+		btnExit.setOpaque(true);
+		btnExit.setBorderPainted(false);
+		btnExit.addMouseListener(new MouseListener() {
+		    public void mouseReleased(MouseEvent arg0) {}
+		    public void mousePressed(MouseEvent arg0) {}
+		    public void mouseEntered(MouseEvent arg0) {
+		    	btnExit.setBackground(Color.decode("0xff5555"));
+		    }
+		    public void mouseExited(MouseEvent arg0) {
+		    	btnExit.setBackground(Color.decode("0x2F849F"));
+		    }
+		    public void mouseClicked(MouseEvent arg0) {}
+		});
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);			
@@ -77,27 +110,23 @@ public class Gui extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				List<Integer> index = new ArrayList<Integer>();
 				String strText = text.getText();
-
+				String motAdevoiler = motAdeviner.getText();
+				
 				if(strText.length() >=2){
 					JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 				} 
 				
 				//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
 				index = p.checkCharInWord(leMot.get(0), strText); //retourne liste d'index pour lesquels le caractere est dans le mot 
-				if(index.size() != 0){
-
-					List<Integer> index2 = new ArrayList<Integer>();
-				
+				if(index.size() != 0){				
 					String motCache = leMot.get(0);
-					String motAdevoiler = motAdeviner.getText();
-
 					for(int i = 0; i < motCache.length(); i++){
 						
 						motAdevoiler = motAdevoiler.replaceAll(" ", "");
 						
 						if (motCache.charAt(i) == strText.charAt(0)){
 							motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);
-							System.out.println(motAdevoiler);
+							// System.out.println(motAdevoiler);
 						}
 					}
 					String newMot = "";
@@ -105,12 +134,30 @@ public class Gui extends JFrame{
 						newMot = newMot + motAdevoiler.charAt(i) + "      ";
 					}
 					motAdeviner.setText(newMot);
+					if (motAdevoiler.equals(motCache)){
+						System.out.println("Bravo gagné ta race");
+						JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						btnWord.setEnabled(true);
+						leMot.clear();
+						motAdeviner.setText("");
+					}
 				}	
 				else{
 					erreur.set(0, erreur.get(0)+1);
-					System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
+					if(erreur.get(0) == 8){
+						labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
+						JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						erreur.set(0, 0);
+						btnWord.setEnabled(true);
+						leMot.clear();
+						motAdeviner.setText("");
+					}
 					labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
+					// System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
+					
+
 				}
+
 				text.setText("");
 			}
 		});
