@@ -45,6 +45,12 @@ public class Gui extends JFrame{
 		// JLabel word = new JLabel("Longueur du mot : 0");
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 
+		////////////////
+		//
+		// IL FAUT TOUT RESET LORS DE L'APPUI SUR NOUVEAU MOT, 
+		// PAS FORCEMENT A LA FIN DU JEU (SURTOUT POUR L'IMAGE)
+		//
+		////////////////
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.setBounds(70,80,100,30);
 		btnWord.setBackground(Color.decode("0x2F849F"));
