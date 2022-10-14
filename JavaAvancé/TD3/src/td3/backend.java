@@ -48,4 +48,18 @@ public class backend {
         String randomWord = l.get(randomNumber);
         return randomWord;
     }
+    public List<Integer> checkCharInWord(String mot, String lettre){
+        List<Integer> l = new ArrayList<Integer>();
+        for(int i = 0; i<mot.length(); i++){
+            String a = mot.substring(i, i + 1);
+            if(lettre.equals(a)){
+                l.add(i);
+                // System.out.println(lettre + " " + "mot.charAt(" + i + ")" + " " + "true");
+            }        
+        }
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println("Le caractère est à la place : " + (l.get(i)+1));
+        }
+        return l;
+    }
 }
