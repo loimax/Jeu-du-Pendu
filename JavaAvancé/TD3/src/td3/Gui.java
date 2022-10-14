@@ -81,34 +81,35 @@ public class Gui extends JFrame{
 				if(strText.length() >=2){
 					JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 				} 
-
+				
 				//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
 				index = p.checkCharInWord(leMot.get(0), strText); //retourne liste d'index pour lesquels le caractere est dans le mot 
 				if(index.size() != 0){
-					String motAdevoiler = motAdeviner.getText();
+
 					List<Integer> index2 = new ArrayList<Integer>();
-					for (int i = 0; i < motAdevoiler.length(); i++){
-						if (motAdevoiler.charAt(i) == '_'){
-							index2.add(i);
+				
+					String motCache = leMot.get(0);
+					String motAdevoiler = motAdeviner.getText();
+
+					for(int i = 0; i < motCache.length(); i++){
+						
+						motAdevoiler = motAdevoiler.replaceAll(" ", "");
+						
+						if (motCache.charAt(i) == strText.charAt(0)){
+							motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);
+							System.out.println(motAdevoiler);
 						}
 					}
-					System.out.println(index2);
-					// for (int i = 0; i < index2.size(); i++){
-					// 	if (motAdevoiler.charAt(i) == '_' && leMot.get(0).charAt(i) == strText.charAt(0)){
-					// 		motAdevoiler = motAdevoiler.replace('_', strText.charAt(0));
-					// 	}
-				    // }
-					// for(int i = 0; i < index.size(); i++){
-					// 	là je dois mettre la lettre (strText) au bon endroit de motAdevoiler;
-					// 	strat : faire un for pour compter les trais dans motAdevoiler, puis après utiliser ce compte pour refaire un 
-					// 	for et modifier aux bons indexs.
-					// }
-					motAdeviner.setText(motAdevoiler);	
-				} 
+					String newMot = "";
+					for(int i = 0; i<motCache.length(); i++){
+						newMot = newMot + motAdevoiler.charAt(i) + "      ";
+					}
+					motAdeviner.setText(newMot);
+				}	
 				else{
 					erreur.set(0, erreur.get(0)+1);
 					System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
-					labelImage.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
+					labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 				}
 				text.setText("");
 			}
@@ -136,7 +137,7 @@ public class Gui extends JFrame{
 		// frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
 		 //JLabel Creation
-        labelImage.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu0.png")); 
+        labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu0.png")); 
         Dimension size = labelImage.getMaximumSize(); //Gets the size of the image
         labelImage.setBounds(500, 180, size.width, size.height);
 		panel4.add(labelImage);

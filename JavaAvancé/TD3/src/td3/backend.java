@@ -10,7 +10,7 @@ public class backend {
     public void ecritureListe(){
         try{
             Scanner sc = new Scanner(System.in);
-            BufferedWriter bw = new BufferedWriter(new FileWriter("JavaAvancé/TD3/src/td3/liste.txt", false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("TD3/src/td3/liste.txt", false));
             System.out.println("Entrez les mots 1 par 1 :\n");
             for(int i = 0; i<10; i++){
                 String a = sc.nextLine();
@@ -26,14 +26,14 @@ public class backend {
         }
     }
     public String recupRandomWord(){
-        File fichier = new File("JavaAvancé/TD3/src/td3/liste.txt");
+        File fichier = new File("TD3/src/td3/liste.txt");
         List<String> l = new ArrayList<String>();
         if(!fichier.exists()){
             // Boolean fileCreated = false;
             ecritureListe();
         }
         try{
-            BufferedReader br = new BufferedReader(new FileReader("JavaAvancé/TD3/src/td3/liste.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("TD3/src/td3/liste.txt"));
             String ligne;
             while((ligne = br.readLine()) != null){
                 l.add(ligne);   
@@ -57,9 +57,8 @@ public class backend {
                 // System.out.println(lettre + " " + "mot.charAt(" + i + ")" + " " + "true");
             }        
         }
-        for (int i = 0; i < l.size(); i++) {
-            System.out.println("Le caractère est à la place : " + (l.get(i)+1));
-        }
+        System.out.println(l);
+        
         return l;
     }
 }
