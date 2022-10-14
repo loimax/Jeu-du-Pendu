@@ -85,21 +85,32 @@ public class Gui extends JFrame{
 				//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
 				index = p.checkCharInWord(leMot.get(0), strText); //retourne liste d'index pour lesquels le caractere est dans le mot 
 				if(index.size() != 0){
-					int nbrElt = 0;
 					String motAdevoiler = motAdeviner.getText();
+					List<Integer> index2 = new ArrayList<Integer>();
+					for (int i = 0; i < motAdevoiler.length(); i++){
+						if (motAdevoiler.charAt(i) == '_'){
+							index2.add(i);
+						}
+					}
+					System.out.println(index2);
+					// for (int i = 0; i < index2.size(); i++){
+					// 	if (motAdevoiler.charAt(i) == '_' && leMot.get(0).charAt(i) == strText.charAt(0)){
+					// 		motAdevoiler = motAdevoiler.replace('_', strText.charAt(0));
+					// 	}
+				    // }
 					// for(int i = 0; i < index.size(); i++){
 					// 	là je dois mettre la lettre (strText) au bon endroit de motAdevoiler;
 					// 	strat : faire un for pour compter les trais dans motAdevoiler, puis après utiliser ce compte pour refaire un 
 					// 	for et modifier aux bons indexs.
 					// }
-					// motAdeviner.setText(motAdevoiler);	
+					motAdeviner.setText(motAdevoiler);	
 				} 
 				else{
 					erreur.set(0, erreur.get(0)+1);
 					System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
 					labelImage.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
-					text.setText("");
 				}
+				text.setText("");
 			}
 		});
 
