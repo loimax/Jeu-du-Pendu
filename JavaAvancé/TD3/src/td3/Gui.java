@@ -25,6 +25,10 @@ public class Gui extends JFrame{
 
 		//Liste pour recuperer le mot aleatoire
 		List<String> leMot = new ArrayList<String>();
+		
+		// Liste pour récupérer le nombre d'erreurs
+		List<Integer> erreur = new ArrayList<Integer>();
+		erreur.add(0);
 
 		this.frame = new JFrame("Jeu du Pendu :");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +39,8 @@ public class Gui extends JFrame{
 		this.panel2 = new JPanel();
 		this.panel3 = new JPanel();
 		this.panel4 = new JPanel();
+
+		JLabel labelImage = new JLabel();
 		// JLabel word = new JLabel("Longueur du mot : 0");
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 	    JButton btnWord = new JButton("Nouveau Mot");
@@ -69,14 +75,31 @@ public class Gui extends JFrame{
 		JTextField text = new JTextField("", 10);
 		text.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				List<Integer> index = new ArrayList<Integer>();
 				String strText = text.getText();
+
 				if(strText.length() >=2){
 					JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
-				} else {
-					System.out.println(strText);
+				} 
+
+				//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
+				index = p.checkCharInWord(leMot.get(0), strText); //retourne liste d'index pour lesquels le caractere est dans le mot 
+				if(index.size() != 0){
+					int nbrElt = 0;
+					String motAdevoiler = motAdeviner.getText();
+					// for(int i = 0; i < index.size(); i++){
+					// 	là je dois mettre la lettre (strText) au bon endroit de motAdevoiler;
+					// 	strat : faire un for pour compter les trais dans motAdevoiler, puis après utiliser ce compte pour refaire un 
+					// 	for et modifier aux bons indexs.
+					// }
+					// motAdeviner.setText(motAdevoiler);	
+				} 
+				else{
+					erreur.set(0, erreur.get(0)+1);
+					System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
+					labelImage.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
+					text.setText("");
 				}
-				text.setText("");
-				System.out.println(p.checkCharInWord(leMot.get(0), strText));
 			}
 		});
 
@@ -101,11 +124,11 @@ public class Gui extends JFrame{
 		frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
 		// frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
-		JLabel label = new JLabel(); //JLabel Creation
-        label.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu0.png")); //Sets the image to be displayed as an icon
-        Dimension size = label.getMaximumSize(); //Gets the size of the image
-        label.setBounds(500, 180, size.width, size.height);
-		panel4.add(label);
+		 //JLabel Creation
+        labelImage.setIcon(new ImageIcon("JavaAvancé/TD3/src/td3/Images/pendu0.png")); 
+        Dimension size = labelImage.getMaximumSize(); //Gets the size of the image
+        labelImage.setBounds(500, 180, size.width, size.height);
+		panel4.add(labelImage);
 		frame.getContentPane().add(panel4, BorderLayout.LINE_START);
 
 		frame.setVisible(true);
