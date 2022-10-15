@@ -2,6 +2,7 @@ package td3;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
@@ -40,10 +41,10 @@ public class Gui extends JFrame{
 		this.panel3 = new JPanel();
 		this.panel4 = new JPanel();
 
-		// JLabel labelImage = new JLabel();
-		// labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu0.png")); 
-        // Dimension size = labelImage.getMaximumSize();
-        // labelImage.setBounds(500, 180, size.width, size.height);
+		JLabel labelImage = new JLabel();
+		labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu0.png")); 
+        Dimension size = labelImage.getMaximumSize();
+        labelImage.setBounds(500, 180, size.width, size.height);
 
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 
@@ -77,15 +78,13 @@ public class Gui extends JFrame{
 				System.out.println("Le mot est : " + leMot.get(0));
 
 				int nombreChar = mot.length();
-				// word.setText("Longueur du mot : "+ nombreChar);
 				String traits = "";
 				for(int i = 0; i<nombreChar; i++){
 					traits = traits + "_" + "      ";
 				}
-				// System.out.println(nombreChar + traits + traits.length() + mot);
 				motAdeviner.setText(traits);
-				//recuperer mot créer 
 				btnWord.setEnabled(false);
+				labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 			}
 		});
 
@@ -112,7 +111,6 @@ public class Gui extends JFrame{
 		});
 		
 		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :");
-		//ajoutez un listener ici pour text
 		JTextField text = new JTextField("", 10);
 		text.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,16 +123,13 @@ public class Gui extends JFrame{
 				} 
 				
 				//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
-				index = p.checkCharInWord(leMot.get(0), strText); //retourne liste d'index pour lesquels le caractere est dans le mot 
+				index = p.checkCharInWord(leMot.get(0), strText); 
 				if(index.size() != 0){				
 					String motCache = leMot.get(0);
 					for(int i = 0; i < motCache.length(); i++){
-						
 						motAdevoiler = motAdevoiler.replaceAll(" ", "");
-						
 						if (motCache.charAt(i) == strText.charAt(0)){
-							motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);
-							// System.out.println(motAdevoiler);
+							motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
 						}
 					}
 					String newMot = "";
@@ -152,10 +147,10 @@ public class Gui extends JFrame{
 				}	
 				else{
 					erreur.set(0, erreur.get(0)+1);
-					panel4.remove(0);
-					panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
-					panel4.repaint();
-
+					// panel4.remove(0);
+					// panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+					// panel4.repaint();
+					labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 					if(erreur.get(0) == 8){
 						JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 						erreur.set(0, 0);
@@ -163,7 +158,6 @@ public class Gui extends JFrame{
 						leMot.clear();
 						motAdeviner.setText("");
 					}
-					// labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 				}
 				text.setText("");
 			}
@@ -184,17 +178,20 @@ public class Gui extends JFrame{
 		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
 		frame.add(panel3, BorderLayout.PAGE_END);
 
-		// panel4.add(labelImage);
-		panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
-		panel4.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent e){
-				panel4.removeAll();
-				panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
-				frame.add(panel4, BorderLayout.LINE_START);
-            }
-        });
+		panel4.add(labelImage);
+		// panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+		// panel4.addComponentListener(new ComponentAdapter() {
+        //     public void componentResized(ComponentEvent e){
+		// 		panel4.removeAll();
+		// 		panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+		// 		frame.add(panel4, BorderLayout.LINE_START);
+        //     }
+        // });
 		// frame.getContentPane().add(panel4, BorderLayout.LINE_START);
 		frame.add(panel4, BorderLayout.LINE_START);
+
+		Dimension minimumSize = new Dimension(1000, 500);
+		frame.setMinimumSize(minimumSize);
 		frame.pack();
 		frame.setVisible(true);
     }
