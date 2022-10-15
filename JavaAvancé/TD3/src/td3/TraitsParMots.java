@@ -6,17 +6,41 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class TraitsParMots extends JPanel {
-  int nombreChar = 0;
-  public TraitsParMots(int nbreChar) {
-    this.setPreferredSize(new Dimension(1000, 800));
+  public int nbError = 0;
+
+  public TraitsParMots(int nbError, int width, int height) {
+    this.setPreferredSize(new Dimension(width, height));
     this.setBackground(Color.WHITE);
     this.setOpaque(true);
-    this.nombreChar = nbreChar;
+    this.nbError = nbError;
   }
 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    
-    g.drawLine(0, 0, this.getWidth(), this.getHeight());
+    paintPendu(nbError, g);
+  }
+  private void paintPendu(int nbError, Graphics g) {
+    switch (nbError) {
+      case 0:
+        break;
+      case 1:
+      	g.drawLine(0, 0, this.getWidth(), this.getHeight());
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      default:
+        break;
+    }
   }
 }

@@ -1,7 +1,6 @@
 package td3;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.*;
@@ -33,7 +32,7 @@ public class Gui extends JFrame{
 
 		this.frame = new JFrame("Jeu du Pendu :");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800,600);
+		frame.setSize(3000,500);
 
 		//Panels :
 		this.panel = new JPanel();
@@ -41,8 +40,11 @@ public class Gui extends JFrame{
 		this.panel3 = new JPanel();
 		this.panel4 = new JPanel();
 
-		JLabel labelImage = new JLabel();
-		// JLabel word = new JLabel("Longueur du mot : 0");
+		// JLabel labelImage = new JLabel();
+		// labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu0.png")); 
+        // Dimension size = labelImage.getMaximumSize();
+        // labelImage.setBounds(500, 180, size.width, size.height);
+
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
 
 		////////////////
@@ -51,6 +53,7 @@ public class Gui extends JFrame{
 		// PAS FORCEMENT A LA FIN DU JEU (SURTOUT POUR L'IMAGE)
 		//
 		////////////////
+
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.setBounds(70,80,100,30);
 		btnWord.setBackground(Color.decode("0x2F849F"));
@@ -69,10 +72,9 @@ public class Gui extends JFrame{
 		});
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				leMot.clear();
 				String mot = p.recupRandomWord();
 				leMot.add(mot);
-				System.out.println(leMot);
+				System.out.println("Le mot est : " + leMot.get(0));
 
 				int nombreChar = mot.length();
 				// word.setText("Longueur du mot : "+ nombreChar);
@@ -109,7 +111,7 @@ public class Gui extends JFrame{
 			}
 		});
 		
-		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :", SwingConstants.RIGHT);
+		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :");
 		//ajoutez un listener ici pour text
 		JTextField text = new JTextField("", 10);
 		text.addActionListener(new ActionListener() {
@@ -150,58 +152,50 @@ public class Gui extends JFrame{
 				}	
 				else{
 					erreur.set(0, erreur.get(0)+1);
+					panel4.remove(0);
+					panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+					panel4.repaint();
+
 					if(erreur.get(0) == 8){
-						labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 						JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 						erreur.set(0, 0);
 						btnWord.setEnabled(true);
 						leMot.clear();
 						motAdeviner.setText("");
 					}
-					labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
-					// System.out.println("Erreur ; nombre d'erreurs : " + erreur.get(0));
-					
-
+					// labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu" + erreur.get(0) +".png"));
 				}
-
 				text.setText("");
 			}
 		});
 
 		panel.add(btnWord);
 		panel.add(btnExit);
-		frame.getContentPane().add(panel, BorderLayout.PAGE_START);
+		// frame.getContentPane().add(panel, BorderLayout.PAGE_START);
+		frame.add(panel, BorderLayout.PAGE_START);
 
-		// panel2.add(word);
 		panel2.add(motAdeviner);
-		frame.getContentPane().add(panel2, BorderLayout.CENTER);
+		// frame.getContentPane().add(panel2, BorderLayout.CENTER);
+		frame.add(panel2, BorderLayout.CENTER);
 
 		panel3.add(labelEntrerLettre);
 		panel3.add(text);
-		// JButton btn1 = new JButton("A");
-		// JButton btn2 = new JButton("B");
-		// JButton btn3 = new JButton("C");
-		// panel3.add(btn1);
-		// panel3.add(btn2);
-		// panel3.add(btn3);   ET FAIRE DES LISTENERS POUR RECUP LA LETTRE APRES EZ
-		
 
-		frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
-		// frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-		
-		 //JLabel Creation
-        labelImage.setIcon(new ImageIcon("TD3/src/td3/Images/pendu0.png")); 
-        Dimension size = labelImage.getMaximumSize(); //Gets the size of the image
-        labelImage.setBounds(500, 180, size.width, size.height);
-		panel4.add(labelImage);
-		frame.getContentPane().add(panel4, BorderLayout.LINE_START);
+		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
+		frame.add(panel3, BorderLayout.PAGE_END);
 
+		// panel4.add(labelImage);
+		panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+		panel4.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e){
+				panel4.removeAll();
+				panel4.add(new TraitsParMots(erreur.get(0), frame.getWidth()/4, frame.getHeight()));
+				frame.add(panel4, BorderLayout.LINE_START);
+            }
+        });
+		// frame.getContentPane().add(panel4, BorderLayout.LINE_START);
+		frame.add(panel4, BorderLayout.LINE_START);
+		frame.pack();
 		frame.setVisible(true);
     }
-		
-	// }
-	public void updateLabel(List<JLabel> labelLettre){
-		
-	}
-
 }
