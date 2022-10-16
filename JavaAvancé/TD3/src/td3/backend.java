@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 
 public class backend {
+    String path = "JavaAvancé/TD3/src/td3/liste.txt";
     public static void main(String[] args) throws Exception {
         // System.out.println(p.recupRandomWord());
         Gui g = new Gui();
@@ -10,7 +11,7 @@ public class backend {
     public void ecritureListe(){
         try{
             Scanner sc = new Scanner(System.in);
-            BufferedWriter bw = new BufferedWriter(new FileWriter("TD3/src/td3/liste.txt", false));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(path, false));
             System.out.println("Entrez les mots 1 par 1 :\n");
             for(int i = 0; i<10; i++){
                 String a = sc.nextLine();
@@ -26,14 +27,14 @@ public class backend {
         }
     }
     public String recupRandomWord(){
-        File fichier = new File("TD3/src/td3/liste.txt");
+        File fichier = new File(path);
         List<String> l = new ArrayList<String>();
         if(!fichier.exists()){
             // Boolean fileCreated = false;
             ecritureListe();
         }
         try{
-            BufferedReader br = new BufferedReader(new FileReader("TD3/src/td3/liste.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(path));
             String ligne;
             while((ligne = br.readLine()) != null){
                 l.add(ligne);   
@@ -54,11 +55,8 @@ public class backend {
             String a = mot.substring(i, i + 1);
             if(lettre.equals(a)){
                 l.add(i);
-                // System.out.println(lettre + " " + "mot.charAt(" + i + ")" + " " + "true");
             }        
         }
-        System.out.println(l);
-        
         return l;
     }
 }
