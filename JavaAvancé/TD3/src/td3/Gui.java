@@ -67,7 +67,6 @@ public class Gui extends JFrame{
 		});
 		btnWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				leMot.clear();
 				String mot = p.recupRandomWord();
 				leMot.add(mot);
 				System.out.println("Le mot est : " + leMot.get(0));
@@ -155,6 +154,7 @@ public class Gui extends JFrame{
 							drawin.setNbError(0);
 							drawin.repaint();
 							lettresJouees.clear();
+							leMot.clear();
 						}
 					}	
 					else{
@@ -169,6 +169,7 @@ public class Gui extends JFrame{
 							drawin.setNbError(0);
 							drawin.repaint();
 							lettresJouees.clear();
+							leMot.clear();
 						}
 					}
 				}
