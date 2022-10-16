@@ -126,12 +126,10 @@ public class TraitsParMots extends JPanel {
 	}
 	public void drawReliure(Graphics g) {
 		int w = this.getWidth();
-		int h = this.getHeight();
 		g.drawLine(w/4, w/4, w/3, 10);
 	}
 	public void drawBar(Graphics g) {
 		int w = this.getWidth();
-		int h = this.getHeight();
 		g.drawLine(w/4, 10, 3*w/4, 10); // barre
 	}
 	public void drawCorde(Graphics g) {
@@ -168,18 +166,5 @@ public class TraitsParMots extends JPanel {
 		int w = this.getWidth();
 		int h = this.getHeight();
 		g.drawLine(3*w/4, h/5+120, 3*w/4 + 40, h/5+170); // jambe droite
-	}
-	public void drawPendu(Graphics g){
-		drawBase(g);
-		drawPole(g);
-		drawReliure(g);
-		drawBar(g);
-		drawCorde(g);
-		drawTete(g);
-		drawCorps(g);
-		drawBrasGauche(g);
-		drawBrasDroit(g);
-		drawJambeGauche(g);
-		drawJambeDroite(g);
 	}
 }
