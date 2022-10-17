@@ -3,10 +3,11 @@ package td3;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-public class Gui extends JFrame{
+public class Gui extends JFrame implements ActionListener{
 
 	public JFrame frame;
 	public JPanel panel;
@@ -26,6 +27,7 @@ public class Gui extends JFrame{
 
 		//Liste pour recuperer le mot aleatoire
 		List<String> leMot = new ArrayList<String>();
+		List<String> lalettre = new ArrayList<String>();
 		
 		// Liste pour récupérer le nombre d'erreurs
 		List<Integer> erreur = new ArrayList<Integer>();
@@ -109,73 +111,317 @@ public class Gui extends JFrame{
 		JLabel labelLettresJouees = new JLabel("Lettres déjà jouées : ", SwingConstants.CENTER);
 		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :");
 		JTextField text = new JTextField("", 10);
+		// lettres a utimliser en ordre alphabetique
+		String firstRow[] = {"a","b","c","d","e","f","g","h","i","j"};
+		String secondRow[] = {"k","l","m","n","o","p","q","r","s"};
+		String thirdRow[] = {"t","u","v","w","x","y","z"};
+		
+		//tableau de  boutons pour economiser ligne de code
+		JButton first[];
+		JButton second[];
+		JButton third[];
+		
+		//repeindre le bouton quand on appuie
+		Color cc = new JButton().getBackground();
+		
+		panel3.setLayout(new GridLayout(5,1));
+		pack();
 
-		text.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				List<Integer> index = new ArrayList<Integer>();
-				String strText = text.getText();
-				String motAdevoiler = motAdeviner.getText();
-				if(leMot.isEmpty()){
-					JOptionPane.showMessageDialog(panel2, "Le jeu n'a pas encore été lancé ; appuyez sur le boutton 'Nouveau Mot' pour commencer", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else if(strText.length() >=2){
-					JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
-				}
-				else if(lettresJouees.contains(strText)){
-					JOptionPane.showMessageDialog(panel2, "Vous avez déjà entrer cette lettre", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
-				} 
-				else{
-					//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
-					index = p.checkCharInWord(leMot.get(0), strText); 
-					lettresJouees.add(strText);
-					String lettresJoueesStr = "| ";
-					for(int i = 0; i<lettresJouees.size(); i++){
-						lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
-					}
-					labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
-					if(index.size() != 0){				
-						String motCache = leMot.get(0);
-						for(int i = 0; i < motCache.length(); i++){
-							motAdevoiler = motAdevoiler.replaceAll(" ", "");
-							if (motCache.charAt(i) == strText.charAt(0)){
-								motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+		//1ere ligne de boutons
+		first = new JButton[firstRow.length];
+		JPanel temp = new JPanel(new GridLayout(1, firstRow.length));
+		for(int i = 0; i < firstRow.length; ++i) 
+		{
+		JButton b= new JButton(firstRow[i]);
+		b.setPreferredSize(new Dimension(100,50));
+		first[i] = b;
+		temp.add(first[i]);
+		}
+		panel3.add(temp);
+		
+		//2eme ligne de boutons
+		second = new JButton[secondRow.length];
+		temp = new JPanel(new GridLayout(1, secondRow.length));
+		for(int i = 0; i < secondRow.length; ++i) 
+		{
+		second[i] = new JButton(secondRow[i]);
+		temp.add(second[i]);
+		}
+		panel3.add(temp);
+		
+		//3eme ligne de boutons
+		third = new JButton[thirdRow.length];
+		temp = new JPanel(new GridLayout(1, thirdRow.length));
+		for(int i = 0; i < thirdRow.length; ++i)
+		{
+		third[i] = new JButton(thirdRow[i]);
+		temp.add(third[i]);
+		}
+		panel3.add(temp);
+		
+		
+		//getContentPane().addKeyListener(this);
+		//text.addKeyListener(this);
+		/*add listeners to all the button */
+		
+		int j=0;
+		//int z;
+		for(JButton b : first) {
+		//b.addKeyListener(this);
+			j++;
+			final int y = j;
+			b.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					lalettre.add(b.getName());
+					int z=y;
+					System.out.println(firstRow[z-1]);
+					List<Integer> index = new ArrayList<Integer>();
+
+						String strText = firstRow[z-1];
+						String motAdevoiler = motAdeviner.getText();
+						if(leMot.isEmpty()){
+							JOptionPane.showMessageDialog(panel2, "Le jeu n'a pas encore été lancé ; appuyez sur le boutton 'Nouveau Mot' pour commencer", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else if(strText.length() >=2){
+							JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						}
+						else if(lettresJouees.contains(strText)){
+							JOptionPane.showMessageDialog(panel2, "Vous avez déjà entrer cette lettre", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						} 
+						else{
+							//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
+							index = p.checkCharInWord(leMot.get(0), strText); 
+							lettresJouees.add(strText);
+							String lettresJoueesStr = "| ";
+							for(int i = 0; i<lettresJouees.size(); i++){
+								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
+							}
+							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							if(index.size() != 0){				
+								String motCache = leMot.get(0);
+								for(int i = 0; i < motCache.length(); i++){
+									motAdevoiler = motAdevoiler.replaceAll(" ", "");
+									if (motCache.charAt(i) == strText.charAt(0)){
+										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+								}
+								String newMot = "";
+								for(int i = 0; i<motCache.length(); i++){
+									newMot = newMot + motAdevoiler.charAt(i) + "      ";
+								}
+								motAdeviner.setText(newMot);
+								if (motAdevoiler.equals(motCache)){
+									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
+							}	
+							else{
+								erreur.set(0, erreur.get(0)+1);
+								drawin.setNbError(erreur.get(0));
+								drawin.repaint();
+								if(erreur.get(0) == 11){
+									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
 							}
 						}
-						String newMot = "";
-						for(int i = 0; i<motCache.length(); i++){
-							newMot = newMot + motAdevoiler.charAt(i) + "      ";
-						}
-						motAdeviner.setText(newMot);
-						if (motAdevoiler.equals(motCache)){
-							JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
-							btnWord.setEnabled(true);
-							motAdeviner.setText("");
-							labelLettresJouees.setText("Lettres déjà jouées : ");
-							drawin.setNbError(0);
-							drawin.repaint();
-							lettresJouees.clear();
-							leMot.clear();
-						}
-					}	
-					else{
-						erreur.set(0, erreur.get(0)+1);
-						drawin.setNbError(erreur.get(0));
-						drawin.repaint();
-						if(erreur.get(0) == 11){
-							JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
-							btnWord.setEnabled(true);
-							motAdeviner.setText("");
-							labelLettresJouees.setText("Lettres déjà jouées : ");
-							drawin.setNbError(0);
-							drawin.repaint();
-							lettresJouees.clear();
-							leMot.clear();
-						}
-					}
+						text.setText("");
+					
 				}
-				text.setText("");
-			}
-		});
+			
+				
+			});
+		}
+		int u = 0;
+		for(JButton b : second) {
+		 
+			u++;
+			final int y = u;
+			b.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					lalettre.add(b.getName());
+					int z=y;
+					System.out.println(secondRow[z-1]);
+					List<Integer> index = new ArrayList<Integer>();
+
+						String strText = secondRow[z-1];
+						String motAdevoiler = motAdeviner.getText();
+						if(leMot.isEmpty()){
+							JOptionPane.showMessageDialog(panel2, "Le jeu n'a pas encore été lancé ; appuyez sur le boutton 'Nouveau Mot' pour commencer", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else if(strText.length() >=2){
+							JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						}
+						else if(lettresJouees.contains(strText)){
+							JOptionPane.showMessageDialog(panel2, "Vous avez déjà entrer cette lettre", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						} 
+						else{
+							//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
+							index = p.checkCharInWord(leMot.get(0), strText); 
+							lettresJouees.add(strText);
+							String lettresJoueesStr = "| ";
+							for(int i = 0; i<lettresJouees.size(); i++){
+								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
+							}
+							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							if(index.size() != 0){				
+								String motCache = leMot.get(0);
+								for(int i = 0; i < motCache.length(); i++){
+									motAdevoiler = motAdevoiler.replaceAll(" ", "");
+									if (motCache.charAt(i) == strText.charAt(0)){
+										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+								}
+								String newMot = "";
+								for(int i = 0; i<motCache.length(); i++){
+									newMot = newMot + motAdevoiler.charAt(i) + "      ";
+								}
+								motAdeviner.setText(newMot);
+								if (motAdevoiler.equals(motCache)){
+									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
+							}	
+							else{
+								erreur.set(0, erreur.get(0)+1);
+								drawin.setNbError(erreur.get(0));
+								drawin.repaint();
+								if(erreur.get(0) == 11){
+									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
+							}
+						}
+						text.setText("");
+					
+				}
+			
+				
+			});
+		}
+		int q=0;
+		for(JButton b : third) {
+			q++;
+			final int y = q;
+			b.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					lalettre.add(b.getName());
+					int z=y;
+					System.out.println(thirdRow[z-1]);
+					List<Integer> index = new ArrayList<Integer>();
+
+						String strText = thirdRow[z-1];
+						String motAdevoiler = motAdeviner.getText();
+						if(leMot.isEmpty()){
+							JOptionPane.showMessageDialog(panel2, "Le jeu n'a pas encore été lancé ; appuyez sur le boutton 'Nouveau Mot' pour commencer", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else if(strText.length() >=2){
+							JOptionPane.showMessageDialog(panel2, "Veuillez entrer une seule lettre seulement", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						}
+						else if(lettresJouees.contains(strText)){
+							JOptionPane.showMessageDialog(panel2, "Vous avez déjà entrer cette lettre", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+						} 
+						else{
+							//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
+							index = p.checkCharInWord(leMot.get(0), strText); 
+							lettresJouees.add(strText);
+							String lettresJoueesStr = "| ";
+							for(int i = 0; i<lettresJouees.size(); i++){
+								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
+							}
+							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							if(index.size() != 0){				
+								String motCache = leMot.get(0);
+								for(int i = 0; i < motCache.length(); i++){
+									motAdevoiler = motAdevoiler.replaceAll(" ", "");
+									if (motCache.charAt(i) == strText.charAt(0)){
+										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+								}
+								String newMot = "";
+								for(int i = 0; i<motCache.length(); i++){
+									newMot = newMot + motAdevoiler.charAt(i) + "      ";
+								}
+								motAdeviner.setText(newMot);
+								if (motAdevoiler.equals(motCache)){
+									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
+							}	
+							else{
+								erreur.set(0, erreur.get(0)+1);
+								drawin.setNbError(erreur.get(0));
+								drawin.repaint();
+								if(erreur.get(0) == 11){
+									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
+									btnWord.setEnabled(true);
+									motAdeviner.setText("");
+									labelLettresJouees.setText("Lettres déjà jouées : ");
+									drawin.setNbError(0);
+									drawin.repaint();
+									lettresJouees.clear();
+									leMot.clear();
+								}
+							}
+						}
+						text.setText("");
+					
+				}
+			
+				
+			});
+		}
+		
+
+		
+
+		
+		//text.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e) {
+
+			//}
+		//});
+		
+		
 
 		panel.add(btnWord);
 		panel.add(btnExit);
@@ -187,11 +433,11 @@ public class Gui extends JFrame{
 		// frame.getContentPane().add(panel2, BorderLayout.CENTER);
 		frame.add(panel2, BorderLayout.CENTER);
 		
-		panel3.add(labelEntrerLettre);
-		panel3.add(text);
+		//panel3.add(labelEntrerLettre);
+		//panel3.add(text);
 
 		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
-		frame.add(panel3, BorderLayout.PAGE_END);
+		frame.add(panel3, BorderLayout.SOUTH);
 
 		panel4.add(drawin);
 		panel4.addComponentListener(new ComponentAdapter() {
@@ -206,4 +452,10 @@ public class Gui extends JFrame{
 		// frame.pack();
 		frame.setVisible(true);
     }
+
+
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
