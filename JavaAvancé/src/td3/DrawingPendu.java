@@ -5,12 +5,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-public class TraitsParMots extends JPanel {
+public class DrawingPendu extends JPanel {
 	
 	public int nbError;
 	public int flag;
-	public TraitsParMots(int width, int height, int nbError) {
-	this.setPreferredSize(new Dimension(width, height));
+	public DrawingPendu(int width, int height, int nbError) {
+	this.setSize(new Dimension(width, height));
 	this.setBackground(Color.WHITE);
 	this.setOpaque(true);
 	this.nbError = 0;

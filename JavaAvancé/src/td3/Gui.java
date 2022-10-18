@@ -3,6 +3,7 @@ package td3;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.*;
@@ -11,9 +12,11 @@ public class Gui extends JFrame implements ActionListener{
 
 	public JFrame frame;
 	public JPanel panel;
+	public JPanel panel1;
 	public JPanel panel2;
 	public JPanel panel3;
 	public JPanel panel4;
+	public JPanel temp2;
 
     public Gui(){
 		WindowListener l = new WindowAdapter() {
@@ -36,20 +39,41 @@ public class Gui extends JFrame implements ActionListener{
 		// Liste pour récupérer les lettres déjà jouées
 		List<String> lettresJouees = new ArrayList<String>();
 
-		this.frame = new JFrame("Jeu du Pendu :");
+		this.frame = new JFrame("Jeu du Pendu");
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000,500);
+		frame.setMinimumSize(new Dimension(0,729));
+		frame.setSize(1000,750);
+		frame.setLocationRelativeTo(null);
 
 		//Panels :
 		this.panel = new JPanel();
+		this.panel1 = new JPanel();
 		this.panel2 = new JPanel();
 		this.panel3 = new JPanel();
 		this.panel4 = new JPanel();
-		Dimension p4MiniSize = new Dimension(frame.getWidth()/3, (frame.getHeight()/2+frame.getHeight()/4));
-		this.panel4.setMinimumSize(p4MiniSize);
+		this.temp2 = new JPanel();
+
+		DrawingPendu drawin = new DrawingPendu(panel4.getWidth(), panel4.getHeight(), erreur.get(0));
+		// panel4.add(bouton);
+		panel4.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e){
+				panel4.setSize(new Dimension(frame.getWidth()/3, frame.getHeight()/3 + frame.getHeight()/10));
+				drawin.setPreferredSize(new Dimension(panel4.getWidth(), panel4.getHeight()));
+				panel4.validate();
+			}
+		});
+
+		JLabel labelTitre = new JLabel("Le Jeu du Pendu");
 		
 		JLabel motAdeviner = new JLabel("", SwingConstants.CENTER);
-		TraitsParMots drawin = new TraitsParMots(panel4.getWidth(), panel4.getHeight(), erreur.get(0));
+		JLabel labelLettresJouees = new JLabel("Lettres déjà jouées : ", SwingConstants.CENTER);
+		JLabel labelLettresJouees2 = new JLabel("", SwingConstants.CENTER);
+
+		labelTitre.setFont(new Font("Brush Script MT", Font.PLAIN, 70));
+		labelTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		labelLettresJouees.setFont(new Font("Arial", Font.BOLD, 25));
+		labelLettresJouees2.setFont(new Font("Arial", Font.BOLD, 20));
 
 	    JButton btnWord = new JButton("Nouveau Mot");
 		btnWord.setBounds(70,80,100,30);
@@ -107,23 +131,19 @@ public class Gui extends JFrame implements ActionListener{
 				System.exit(0);			
 			}
 		});
-
-		JLabel labelLettresJouees = new JLabel("Lettres déjà jouées : ", SwingConstants.CENTER);
+		
+		
 		// lettres a utimliser en ordre alphabetique
-		String firstRow[] = {"a","b","c","d","e","f","g","h","i","j"};
-		String secondRow[] = {"k","l","m","n","o","p","q","r","s"};
-		String thirdRow[] = {"t","u","v","w","x","y","z"};
+		String firstRow[] = {"A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"};
+		String secondRow[] = {"Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"};
+		String thirdRow[] = {"W", "X", "C", "V", "B", "N"};
 		
 		//tableau de  boutons pour economiser ligne de code
 		JButton first[];
 		JButton second[];
 		JButton third[];
 		
-		//repeindre le bouton quand on appuie
-		Color cc = new JButton().getBackground();
-		
-		panel3.setLayout(new GridLayout(5,1));
-		pack();
+		panel3.setLayout(new GridLayout(4,1));
 
 		//1ere ligne de boutons
 		first = new JButton[firstRow.length];
@@ -134,6 +154,7 @@ public class Gui extends JFrame implements ActionListener{
 		b.setPreferredSize(new Dimension(100,50));
 		first[i] = b;
 		temp.add(first[i]);
+		
 		}
 		panel3.add(temp);
 		
@@ -154,16 +175,12 @@ public class Gui extends JFrame implements ActionListener{
 		{
 		third[i] = new JButton(thirdRow[i]);
 		temp.add(third[i]);
+
 		}
 		panel3.add(temp);
 		
-		
-		//getContentPane().addKeyListener(this);
-		//text.addKeyListener(this);
-		/*add listeners to all the button */
-		
 		int j=0;
-		//int z;
+
 		for(JButton b : first) {
 		//b.addKeyListener(this);
 			j++;
@@ -172,10 +189,8 @@ public class Gui extends JFrame implements ActionListener{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					lalettre.add(b.getName());
 					int z=y;
-					System.out.println(firstRow[z-1]);
 					List<Integer> index = new ArrayList<Integer>();
 
 						String strText = firstRow[z-1];
@@ -197,13 +212,19 @@ public class Gui extends JFrame implements ActionListener{
 							for(int i = 0; i<lettresJouees.size(); i++){
 								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
 							}
-							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							labelLettresJouees2.setText(lettresJoueesStr);
 							if(index.size() != 0){				
 								String motCache = leMot.get(0);
 								for(int i = 0; i < motCache.length(); i++){
 									motAdevoiler = motAdevoiler.replaceAll(" ", "");
 									if (motCache.charAt(i) == strText.charAt(0)){
 										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toUpperCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toUpperCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toLowerCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toLowerCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);
 									}
 								}
 								String newMot = "";
@@ -215,7 +236,7 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
+									labelLettresJouees2.setText("");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -230,7 +251,7 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
+									labelLettresJouees2.setText("");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -239,8 +260,6 @@ public class Gui extends JFrame implements ActionListener{
 							}
 						}
 				}
-			
-				
 			});
 		}
 		int u = 0;
@@ -252,10 +271,8 @@ public class Gui extends JFrame implements ActionListener{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					lalettre.add(b.getName());
 					int z=y;
-					System.out.println(secondRow[z-1]);
 					List<Integer> index = new ArrayList<Integer>();
 
 						String strText = secondRow[z-1];
@@ -277,13 +294,19 @@ public class Gui extends JFrame implements ActionListener{
 							for(int i = 0; i<lettresJouees.size(); i++){
 								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
 							}
-							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							labelLettresJouees2.setText(lettresJoueesStr);
 							if(index.size() != 0){				
 								String motCache = leMot.get(0);
 								for(int i = 0; i < motCache.length(); i++){
 									motAdevoiler = motAdevoiler.replaceAll(" ", "");
 									if (motCache.charAt(i) == strText.charAt(0)){
 										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toUpperCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toUpperCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toLowerCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toLowerCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);
 									}
 								}
 								String newMot = "";
@@ -295,7 +318,6 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -310,7 +332,7 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
+									labelLettresJouees2.setText("");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -331,7 +353,6 @@ public class Gui extends JFrame implements ActionListener{
 				public void actionPerformed(ActionEvent e) {
 					lalettre.add(b.getName());
 					int z=y;
-					System.out.println(thirdRow[z-1]);
 					List<Integer> index = new ArrayList<Integer>();
 
 						String strText = thirdRow[z-1];
@@ -353,13 +374,19 @@ public class Gui extends JFrame implements ActionListener{
 							for(int i = 0; i<lettresJouees.size(); i++){
 								lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
 							}
-							labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
+							labelLettresJouees2.setText(lettresJoueesStr);
 							if(index.size() != 0){				
 								String motCache = leMot.get(0);
 								for(int i = 0; i < motCache.length(); i++){
 									motAdevoiler = motAdevoiler.replaceAll(" ", "");
 									if (motCache.charAt(i) == strText.charAt(0)){
 										motAdevoiler= motAdevoiler.substring(0, i) + strText.charAt(0) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toUpperCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toUpperCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);	
+									}
+									else if(motCache.charAt(i) == Character.toLowerCase(strText.charAt(0))){
+										motAdevoiler= motAdevoiler.substring(0, i) + Character.toLowerCase(strText.charAt(0)) + motAdevoiler.substring(i + 1);
 									}
 								}
 								String newMot = "";
@@ -371,7 +398,7 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Bravo, vous avez gagné !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
+									labelLettresJouees2.setText("");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -386,7 +413,7 @@ public class Gui extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(panel2, "Vous avez perdu !", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 									btnWord.setEnabled(true);
 									motAdeviner.setText("");
-									labelLettresJouees.setText("Lettres déjà jouées : ");
+									labelLettresJouees2.setText("");
 									drawin.setNbError(0);
 									drawin.repaint();
 									lettresJouees.clear();
@@ -398,32 +425,28 @@ public class Gui extends JFrame implements ActionListener{
 			});
 		}
 		
-		panel.add(btnWord);
-		panel.add(btnExit);
-		// frame.getContentPane().add(panel, BorderLayout.PAGE_START);
-		frame.add(panel, BorderLayout.PAGE_START);
+		panel.setLayout(new GridLayout(2,1));
+		
+		panel.add(labelTitre);
+		
+		temp2.add(btnWord);
+		temp2.add(btnExit);
+		
+		panel.add(temp2);
 
+		frame.getContentPane().add(panel, BorderLayout.PAGE_START);
+
+		panel2.setLayout(new GridLayout(3,1));
 		panel2.add(motAdeviner);
 		panel2.add(labelLettresJouees);
-		// frame.getContentPane().add(panel2, BorderLayout.CENTER);
+		panel2.add(labelLettresJouees2);
 		frame.add(panel2, BorderLayout.CENTER);
 		
-		//panel3.add(labelEntrerLettre);
-		//panel3.add(text);
-
-		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
 		frame.add(panel3, BorderLayout.SOUTH);
 
 		panel4.add(drawin);
-		panel4.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent e){
-				panel4.setSize(frame.getWidth()/3, (frame.getHeight()/2+frame.getHeight()/4));
-				drawin.setPreferredSize(new Dimension(panel4.getWidth(), panel4.getHeight()));
-			}
-		});
-		// frame.getContentPane().add(panel4, BorderLayout.LINE_START);
 		frame.add(panel4, BorderLayout.LINE_START);
-
+		
 		// frame.pack();
 		frame.setVisible(true);
     }

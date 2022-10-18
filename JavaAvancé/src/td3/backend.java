@@ -5,7 +5,6 @@ import java.io.*;
 public class backend {
     String path = "JavaAvancé/src/td3/liste.txt";
     public static void main(String[] args) throws Exception {
-        // System.out.println(p.recupRandomWord());
         Gui g = new Gui();
     }
     public void ecritureListe(){
@@ -53,7 +52,7 @@ public class backend {
         List<Integer> l = new ArrayList<Integer>();
         for(int i = 0; i<mot.length(); i++){
             String a = mot.substring(i, i + 1);
-            if(lettre.equals(a)){
+            if(lettre.equals(a) || lettre.equals(a.toUpperCase())){
                 l.add(i);
             }        
         }
