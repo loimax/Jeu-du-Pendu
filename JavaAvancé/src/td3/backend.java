@@ -3,7 +3,7 @@ import java.util.*;
 import java.io.*;
 
 public class backend {
-    String path = "JavaAvancé/TD3/src/td3/liste.txt";
+    String path = "JavaAvancé/src/td3/liste.txt";
     public static void main(String[] args) throws Exception {
         // System.out.println(p.recupRandomWord());
         Gui g = new Gui();
