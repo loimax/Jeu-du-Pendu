@@ -125,11 +125,11 @@ public class Gui extends JFrame{
 					JOptionPane.showMessageDialog(panel2, "Vous avez déjà entrer cette lettre", "InfoBox: ", JOptionPane.WARNING_MESSAGE);
 				} 
 				else{
-					//tout le programme en dessous peut etre fait dans checkCharInWord, pour plus de logique entre backend et frontend
 					index = p.checkCharInWord(leMot.get(0), strText); 
 					lettresJouees.add(strText);
 					String lettresJoueesStr = "| ";
-					for(int i = 0; i<lettresJouees.size(); i++){
+					for(int i = 0; i<lettresJouees.size(); i++)
+					{
 						lettresJoueesStr = lettresJoueesStr + lettresJouees.get(i).toUpperCase() + " | ";
 					}
 					labelLettresJouees.setText("Lettres déjà jouées : " + lettresJoueesStr);
