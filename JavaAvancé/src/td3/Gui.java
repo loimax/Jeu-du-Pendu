@@ -56,7 +56,6 @@ public class Gui extends JFrame{
 		this.panel4 = new JPanel();
 		this.temp2 = new JPanel();
 
-		panel3.setBackground(Color.WHITE);
 		DrawingPendu drawin = new DrawingPendu(panel4.getWidth(), frame.getHeight()-panel3.getHeight() - 223, erreur.get(0));
 		// panel4.add(bouton);
 		panel4.addComponentListener(new ComponentAdapter() {
@@ -73,10 +72,10 @@ public class Gui extends JFrame{
 
 		labelTitre.setFont(new Font("Brush Script MT", Font.PLAIN, 70));
 		labelTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		labelLettresJouees.setFont(new Font("Arial", Font.BOLD, 25));
+		motAdeviner.setFont(new Font("Arial", Font.BOLD, 20));
+		labelLettresJouees.setFont(new Font("Arial", Font.BOLD, 23));
 		labelLettresJouees2.setFont(new Font("Arial", Font.BOLD, 20));
-		motAdeviner.setFont(new Font("Arial", Font.BOLD, 25));
-
+		
 	    JButton btnWord = new JButton("Nouveau Mot");
 		JButton btnExit = new JButton("Exit");
 		btnWord.setFont(new Font("Arial", Font.BOLD, 20));
@@ -138,60 +137,50 @@ public class Gui extends JFrame{
 			}
 		});
 		
-		
 		// lettres a utimliser en ordre alphabetique
 		String firstRow[] = {"A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"};
 		String secondRow[] = {"Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"};
 		String thirdRow[] = {"W", "X", "C", "V", "B", "N"};
 		
 		//tableau de  boutons pour economiser ligne de code
-		JButton first[];
-		JButton second[];
-		JButton third[];
+		JButton first[] = new JButton[firstRow.length];
+		JButton second[] = new JButton[secondRow.length];
+		JButton third[] = new JButton[thirdRow.length];
 		
-		panel3.setLayout(new GridLayout(4,1));
-
 		//1ere ligne de boutons
-		first = new JButton[firstRow.length];
 		JPanel temp = new JPanel(new GridLayout(1, firstRow.length));
-		for(int i = 0; i < firstRow.length; ++i) 
-		{
-		JButton b= new JButton(firstRow[i]);
-		b.setPreferredSize(new Dimension(100,50));
-		first[i] = b;
-		temp.add(first[i]);
-		
+		for(int i = 0; i < firstRow.length; ++i) {
+			JButton b= new JButton(firstRow[i]);
+			b.setPreferredSize(new Dimension(100,50));
+			first[i] = b;
+			temp.add(first[i]);
 		}
 		panel3.add(temp);
 		
 		//2eme ligne de boutons
-		second = new JButton[secondRow.length];
 		temp = new JPanel(new GridLayout(1, secondRow.length));
 		for(int i = 0; i < secondRow.length; ++i) 
 		{
-		second[i] = new JButton(secondRow[i]);
-		temp.add(second[i]);
+			second[i] = new JButton(secondRow[i]);
+			temp.add(second[i]);
 		}
 		panel3.add(temp);
 		
 		//3eme ligne de boutons
-		third = new JButton[thirdRow.length];
 		temp = new JPanel(new GridLayout(1, thirdRow.length));
-		for(int i = 0; i < thirdRow.length; ++i)
-		{
-		third[i] = new JButton(thirdRow[i]);
-		temp.add(third[i]);
-
+		for(int i = 0; i < thirdRow.length; ++i){
+			third[i] = new JButton(thirdRow[i]);
+			temp.add(third[i]);
 		}
+		panel3.add(temp);
+
 		listeBoutons.add(first);
 		listeBoutons.add(second);
 		listeBoutons.add(third);
 		resetButtons(listeBoutons);
-
-		panel3.add(temp);
+		
 		
 		int j=0;
-
 		for(JButton b : first) {
 		//b.addKeyListener(this);
 			j++;
@@ -449,28 +438,25 @@ public class Gui extends JFrame{
 		}
 		
 		panel.setLayout(new GridLayout(2,1));
-		
 		panel.add(labelTitre);
-		
 		temp2.add(btnWord);
 		temp2.add(btnExit);
-		
 		panel.add(temp2);
-
-		frame.getContentPane().add(panel, BorderLayout.PAGE_START);
-
+		
 		panel2.setLayout(new GridLayout(3,1));
 		panel2.add(motAdeviner);
 		panel2.add(labelLettresJouees);
 		panel2.add(labelLettresJouees2);
-		frame.add(panel2, BorderLayout.CENTER);
-		
-		frame.add(panel3, BorderLayout.SOUTH);
 
+		panel3.setLayout(new GridLayout(4,1));
+		panel3.setBackground(Color.WHITE);
 		panel4.add(drawin);
+
+		frame.add(panel, BorderLayout.PAGE_START);
+		frame.add(panel2, BorderLayout.CENTER);
+		frame.add(panel3, BorderLayout.SOUTH);
 		frame.add(panel4, BorderLayout.LINE_START);
-		
-		// frame.pack();
+
 		frame.setVisible(true);
     }
 

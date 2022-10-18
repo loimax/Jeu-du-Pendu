@@ -4,9 +4,6 @@ import java.io.*;
 
 public class backend {
     String path = "JavaAvancé/src/td3/liste.txt";
-    public static void main(String[] args) throws Exception {
-        Gui g = new Gui();
-    }
     public void ecritureListe(){
         try{
             Scanner sc = new Scanner(System.in);
