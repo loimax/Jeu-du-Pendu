@@ -7,9 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-public class Gui extends JFrame implements ActionListener{
-
-	public JFrame frame;
+public class Gui extends JFrame implements ActionListener{public JFrame frame;
 	public JPanel panel;
 	public JPanel panel2;
 	public JPanel panel3;
@@ -27,8 +25,9 @@ public class Gui extends JFrame implements ActionListener{
 
 		//Liste pour recuperer le mot aleatoire
 		List<String> leMot = new ArrayList<String>();
+    
 		List<String> lalettre = new ArrayList<String>();
-		
+
 		// Liste pour récupérer le nombre d'erreurs
 		List<Integer> erreur = new ArrayList<Integer>();
 		erreur.add(0);
@@ -420,9 +419,7 @@ public class Gui extends JFrame implements ActionListener{
 
 			//}
 		//});
-		
-		
-
+    
 		panel.add(btnWord);
 		panel.add(btnExit);
 		// frame.getContentPane().add(panel, BorderLayout.PAGE_START);
@@ -433,11 +430,8 @@ public class Gui extends JFrame implements ActionListener{
 		// frame.getContentPane().add(panel2, BorderLayout.CENTER);
 		frame.add(panel2, BorderLayout.CENTER);
 		
-		//panel3.add(labelEntrerLettre);
-		//panel3.add(text);
 
-		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
-		frame.add(panel3, BorderLayout.SOUTH);
+		frame.add(panel3, BorderLayout.PAGE_END);
 
 		panel4.add(drawin);
 		panel4.addComponentListener(new ComponentAdapter() {
@@ -452,10 +446,4 @@ public class Gui extends JFrame implements ActionListener{
 		// frame.pack();
 		frame.setVisible(true);
     }
-
-
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }
