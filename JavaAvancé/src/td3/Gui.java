@@ -7,7 +7,9 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-public class Gui extends JFrame implements ActionListener{public JFrame frame;
+public class Gui extends JFrame implements ActionListener{
+
+	public JFrame frame;
 	public JPanel panel;
 	public JPanel panel2;
 	public JPanel panel3;
@@ -25,9 +27,8 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 
 		//Liste pour recuperer le mot aleatoire
 		List<String> leMot = new ArrayList<String>();
-    
 		List<String> lalettre = new ArrayList<String>();
-
+		
 		// Liste pour récupérer le nombre d'erreurs
 		List<Integer> erreur = new ArrayList<Integer>();
 		erreur.add(0);
@@ -108,8 +109,6 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 		});
 
 		JLabel labelLettresJouees = new JLabel("Lettres déjà jouées : ", SwingConstants.CENTER);
-		JLabel labelEntrerLettre = new JLabel("Entrez la lettre, puis appuyez sur entrée :");
-		JTextField text = new JTextField("", 10);
 		// lettres a utimliser en ordre alphabetique
 		String firstRow[] = {"a","b","c","d","e","f","g","h","i","j"};
 		String secondRow[] = {"k","l","m","n","o","p","q","r","s"};
@@ -239,8 +238,6 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 								}
 							}
 						}
-						text.setText("");
-					
 				}
 			
 				
@@ -321,11 +318,7 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 								}
 							}
 						}
-						text.setText("");
-					
 				}
-			
-				
 			});
 		}
 		int q=0;
@@ -336,7 +329,6 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					lalettre.add(b.getName());
 					int z=y;
 					System.out.println(thirdRow[z-1]);
@@ -402,24 +394,10 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 								}
 							}
 						}
-						text.setText("");
-					
 				}
-			
-				
 			});
 		}
 		
-
-		
-
-		
-		//text.addActionListener(new ActionListener() {
-			//public void actionPerformed(ActionEvent e) {
-
-			//}
-		//});
-    
 		panel.add(btnWord);
 		panel.add(btnExit);
 		// frame.getContentPane().add(panel, BorderLayout.PAGE_START);
@@ -430,8 +408,11 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 		// frame.getContentPane().add(panel2, BorderLayout.CENTER);
 		frame.add(panel2, BorderLayout.CENTER);
 		
+		//panel3.add(labelEntrerLettre);
+		//panel3.add(text);
 
-		frame.add(panel3, BorderLayout.PAGE_END);
+		// frame.getContentPane().add(panel3, BorderLayout.PAGE_END);
+		frame.add(panel3, BorderLayout.SOUTH);
 
 		panel4.add(drawin);
 		panel4.addComponentListener(new ComponentAdapter() {
@@ -446,4 +427,10 @@ public class Gui extends JFrame implements ActionListener{public JFrame frame;
 		// frame.pack();
 		frame.setVisible(true);
     }
+
+
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
